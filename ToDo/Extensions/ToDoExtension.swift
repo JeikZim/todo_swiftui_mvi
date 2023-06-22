@@ -8,18 +8,18 @@
 import Foundation
 
 extension ToDoList {
-    static var mockItem1: ToDoItem { return ToDoItem(content: "Small") }
-    static var mockItem2: ToDoItem { return ToDoItem(content: "Lorem Ipsum") }
-    static var mockItem3: ToDoItem { return ToDoItem(content: "Medium lorem ipsum and some text bla bla bla...") }
-    static var mockItem4: ToDoItem {
-        return ToDoItem(
+    static var mockItem1: ToDoListItem { return ToDoListItem(content: "Small") }
+    static var mockItem2: ToDoListItem { return ToDoListItem(content: "Lorem Ipsum") }
+    static var mockItem3: ToDoListItem { return ToDoListItem(content: "Medium lorem ipsum and some text bla bla bla...") }
+    static var mockItem4: ToDoListItem {
+        return ToDoListItem(
             content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla maximus sit amet lorem in feugiat. Vestibulum rhoncus non velit pellentesque porttitor. Curabitur ipsum sem, eleifend vitae orci eget, mollis venenatis justo."
         )
     }
-    static var mockList1: ToDoList {
-        ToDoList.instance.items = [ToDoList.mockItem1, ToDoList.mockItem2, ToDoList.mockItem3, ToDoList.mockItem4]
+    static var mockList1: ToDoListService {
+        ToDoListService.instance.items = [ToDoList.mockItem1, ToDoList.mockItem2, ToDoList.mockItem3, ToDoList.mockItem4]
 
-        return ToDoList.instance
+        return ToDoListService.instance
     }
 }
 
