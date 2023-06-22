@@ -6,16 +6,15 @@
 //
 
 import Foundation
+import SwiftUI
 
-class List: Identifiable {
-    var items: [ToDoItem]
+class ToDoList: ObservableObject {
+    @Published var items: [ToDoItem] = []
+    static var instance = ToDoList()
     
-    private init() {
-        self.items = []
-    }
-    static var instance = List()
+    private init() {}
     
-    func createItem(content: String = "") {
+    func createItem(content: String) {
         items.append(ToDoItem(content: content))
     }
     
@@ -32,14 +31,14 @@ class List: Identifiable {
     }
 }
 
-struct ToDoItem {
+struct ToDoItem: Identifiable {
     var id: String
-    var date: Date
+    var date: String
     var content: String
     
     init(id: String = UUID().uuidString, content: String = "") {
         self.id = id
-        self.date = Date()
+        self.date = Date().toString()
         self.content = content
     }
 }
