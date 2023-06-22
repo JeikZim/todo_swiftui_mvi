@@ -8,20 +8,21 @@
 import SwiftUI
 
 struct EditorToDoItemPage: View {
-    @EnvironmentObject var todoList: ToDoListService
+    // @EnvironmentObject var todoList: ToDoListService
+    // @Binding var todoOpened: Bool
     @StateObject var viewModel: EditorToDoViewModel = EditorToDoViewModel()
-    @Binding var todoOpened: Bool
     
     var body: some View {
         NavigationView {
             VStack{
                 TextEditor(text: $viewModel.content)
-                Button("Add") {
-                    todoList.createItem(content: viewModel.content)
-                    viewModel.content = ""
-                    todoOpened = false
-                }
-                .disabled(viewModel.content == "")
+                Button(title: "Add", action: viewModel.save)
+                // Button("Add") {
+                    // todoList.createItem(content: viewModel.content)
+                    // viewModel.content = ""
+                    // todoOpened = false
+                // }
+                .disabled(viewModel.hasContent)
             }
         }
     }
