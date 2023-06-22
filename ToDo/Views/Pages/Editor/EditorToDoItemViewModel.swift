@@ -10,10 +10,12 @@ import SwiftUI
 
 class EditorToDoViewModel: ObservableObject {
     @Published var content: String = ""
-//    @Published var hasContent: Binding<Bool>
+//    @Published var hasContent: Bool = content != ""
+    // @EnvironmentObject var todoList: ToDoListService
+    // @Binding var editorOpened: Bool
     
-//    init(content: String = "", hasContent: Binding<Bool> = false) {
-//        self.content = content
-//        self.hasContent = hasContent
-//    }
+    // func save {
+    //     todoList.createItem(content: self.content)
+    //     editorOpened = false
+    // }
 }
