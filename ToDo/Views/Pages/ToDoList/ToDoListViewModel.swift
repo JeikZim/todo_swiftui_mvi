@@ -7,6 +7,13 @@
 
 import Foundation
 
-class ToDoListViewModel {
+class ToDoListViewModel: ObservableObject {
+    
+    @Published
+    private(set) var toDoItems: [ToDoItem] = []
+    
+    init() {
+        ToDoService.instance.$items.assign(to: &$toDoItems)
+    }
     
 }

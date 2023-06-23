@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension ToDoList {
+extension ToDoListService {
     static var mockItem1: ToDoListItem { return ToDoListItem(content: "Small") }
     static var mockItem2: ToDoListItem { return ToDoListItem(content: "Lorem Ipsum") }
     static var mockItem3: ToDoListItem { return ToDoListItem(content: "Medium lorem ipsum and some text bla bla bla...") }
@@ -17,7 +17,7 @@ extension ToDoList {
         )
     }
     static var mockList1: ToDoListService {
-        ToDoListService.instance.items = [ToDoList.mockItem1, ToDoList.mockItem2, ToDoList.mockItem3, ToDoList.mockItem4]
+        ToDoListService.instance.items = [self.mockItem1, self.mockItem2, self.mockItem3, self.mockItem4]
 
         return ToDoListService.instance
     }

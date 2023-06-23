@@ -8,23 +8,44 @@
 import SwiftUI
 
 struct ToDoListPage: View {
-    @State var todoOpened: Bool = false
+    
+    @State
+    var creationOpened: Bool = false
+    @State
+    var editingItem: ToDoItem?
+    
+    @StateObject
+    var viewModel = ToDoListViewModel()
     
     var body: some View {
         NavigationView {
             ZStack {
-                ToDoList()
+                ToDoItemsList(
+                    items: viewModel.toDoItems,
+                    selectedItem: $editingItem,
+                    itemDestination: { item in
+                        EditToDoItemPage(
+                            mode: .edit(item: item),
+                            onEnded: {editingItem = nil}
+                        )
+                    }
+                    
+                )
+                
                 VStack {
                     Spacer()
+                    
                     NavigationLink(
-                        destination: EditorToDoItemPage(todoOpened: $todoOpened),
-                        isActive: $todoOpened
-                    ) {
-                        Text("Add")
-                    }
-                    .navigationTitle("To Do List")
+                        "Add new note",
+                        destination: EditToDoItemPage(
+                            mode: .create,
+                            onEnded: { creationOpened = false }
+                        ),
+                        isActive: $creationOpened
+                    )
                 }
             }
+            .navigationTitle("To Do")
         }
     }
 }
@@ -32,7 +53,7 @@ struct ToDoListPage: View {
 #if DEBUG
 struct ToDoListPage_Previews: PreviewProvider {
     static var previews: some View {
-        ToDoListPage().environmentObject(ToDoListService.instance)
+        ToDoListPage()
     }
 }
 #endif

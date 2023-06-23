@@ -7,41 +7,55 @@
 
 import SwiftUI
 
-struct ToDoList: View {
-    @EnvironmentObject var todoList: ToDoListService
+struct ToDoItemsList<ToDoItemDestinationView: View>: View {
+
+    let items: [ToDoItem]
+    
+    @Binding
+    var selectedItem: ToDoItem?
+    let itemDestination: (ToDoItem) -> ToDoItemDestinationView
     
     var body: some View {
-        if todoList.items.isEmpty {
-            Text("No items")
-                .padding(.all)
+        if items.isEmpty {
+            Text("List is empty")
                 .font(
                     .system(
                         size: 24,
-                        weight: .bold,
-                        design: .monospaced
+                        weight: .bold //,
+//                        design: .monospaced
                     )
                 )
                 .foregroundColor(.gray)
         } else {
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 8) {
-                    ForEach(todoList.items) { item in
-                        Button (action: {}) {
-                            ToDoRow(item: item, itemPressed: {})
-                        }
+                LazyVStack {
+                    ForEach(items) { item in
+                        NavigationLink(
+                            destination: itemDestination(item),
+                            tag: item,
+                            selection: $selectedItem,
+                            label: { ToDoItemRow(item: item) }
+                        )
                         .buttonStyle(PlainButtonStyle())
-                        Divider()
                     }
                 }
+                .padding()
             }
         }
     }
 }
 
 #if DEBUG
-struct ToDoList_Previews: PreviewProvider {
+struct ToDoItemsList_Previews: PreviewProvider {
+    @State
+    static var selectedItem: ToDoItem? = .mockItem1()
+    
     static var previews: some View {
-        ToDoList().environmentObject(ToDoListService.instance)
+        ToDoItemsList(
+            items: ToDoItem.mockItems(),
+            selectedItem: $selectedItem,
+            itemDestination: { _ in EmptyView() }
+        )
     }
 }
 #endif

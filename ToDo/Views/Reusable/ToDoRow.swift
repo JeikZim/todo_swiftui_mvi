@@ -7,60 +7,35 @@
 
 import SwiftUI
 
-struct ToDoRow: View {
-    var id: String
-    var content: String
-    var date: String
-    var itemPressed: () -> Void
+struct ToDoItemRow: View {
     
-    init(item: ToDoListItem, itemPressed: @escaping () -> Void) {
-        self.id = item.id
-        self.content = item.content
-        self.date = item.date
-        self.itemPressed = itemPressed
-    }
+    let item: ToDoItem
     
     var body: some View {
-        Button (action: itemPressed) {
-            HStack() {
-                Text(content)
-                    .multilineTextAlignment(.leading)
-                    .padding(.top, 8)
-                Spacer()
-                Divider()
-                VStack {
-                    Text(date)
-                    Spacer()
-                }
-                .padding(.top, 8)
-                Divider()
-                VStack {
-                    HStack {
-                        Button("✅") {
-                            ToDoListService.instance.removeItem(byId: id)
-                        }
-                        Button("❌") {
-                            ToDoListService.instance.removeItem(byId: id)
-                        }
-                    }
-                    Spacer()
-                }
-                .font(.largeTitle)
-//                .fontWeight(.bold)
-                .padding(.bottom, 5)
+        ZStack {
+            Color.white
+                .cornerRadius(8)
+                .shadow(color: .black.opacity(0.15), radius: 4, x: 0,y: 2)
+            
+            VStack(alignment: .leading, spacing: 4) {
+                Text(item.content)
+                    .frame(maxWidth: .greatestFiniteMagnitude, alignment: .leading)
+                
+                Text(item.date.toString())
+                    .foregroundColor(.gray)
+                    .font(.system(size: 14, weight: .medium))
             }
-            .font(.title2)
-            .padding(.all, 8)
-            .foregroundColor(.black)
+            .padding()
         }
-        .buttonStyle(PlainButtonStyle())
+        .fixedSize(horizontal: false, vertical: true)
     }
 }
 
 #if DEBUG
 struct ToDoRow_Previews: PreviewProvider {
     static var previews: some View {
-        ToDoRow(item: ToDoList.mockItem1, itemPressed: {})
+        ToDoItemRow(item: ToDoItem.mockItem1())
+            .padding()
     }
 }
 #endif
