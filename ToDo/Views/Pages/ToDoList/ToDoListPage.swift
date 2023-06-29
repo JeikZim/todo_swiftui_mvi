@@ -15,13 +15,13 @@ struct ToDoListPage: View {
     var editingItem: ToDoItem?
     
     @StateObject
-    var viewModel = ToDoListViewModel()
+    var interactor: ToDoListInteractor = ToDoListInteractor()
     
     var body: some View {
         NavigationView {
             ZStack {
                 ToDoItemsList(
-                    items: viewModel.toDoItems,
+                    items: interactor.state.toDoItems,
                     selectedItem: $editingItem,
                     itemDestination: { item in
                         EditToDoItemPage(
